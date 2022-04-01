@@ -13,4 +13,17 @@ export default NextAuth({
   pages: {
     signIn: '/auth/signin',
   },
+  callbacks: {
+    async session({ session, token, user }) {
+      session.user.username = session.user.name
+        .split(' ')
+        .join('')
+        .toLocaleLowerCase()
+      session.user.uid = token.sub //from token google user id that comes back
+      return session
+      //John Cena
+      //to
+      //johncena
+    },
+  },
 })
