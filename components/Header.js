@@ -11,7 +11,7 @@ import {
 } from '@heroicons/react/outline'
 const Header = () => {
   return (
-    <div className="sticky z-50 border-b shadow-md ">
+    <div className="sticky top-0 z-50 border-b bg-white shadow-md ">
       <div className=" flex max-w-6xl justify-between  pl-5 pr-5 lg:mx-auto">
         {/* Logo */}
         <div className="relative hidden w-24 cursor-pointer lg:inline-grid">

@@ -3,14 +3,14 @@ import Post from './Post'
 
 const posts = [
   {
-    id: '123',
+    id: '1',
     username: 'asd',
     userImg: 'https://bit.ly/3LuYuRJ',
     img: 'https://bit.ly/3LuYuRJ',
     caption: 'ESSA BYQ',
   },
   {
-    id: '123',
+    id: '2',
     username: 'asd',
     userImg: 'https://bit.ly/3LuYuRJ',
     img: 'https://bit.ly/3LuYuRJ',

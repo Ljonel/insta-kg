@@ -5,7 +5,7 @@ import Header from '../components/Header'
 import Section from '../components/Section'
 const Home: NextPage = () => {
   return (
-    <div className=" h-screen bg-gray-100">
+    <div className=" bg-gray-100">
       <Head>
         <title>Instakilo</title>
         <link rel="icon" href="" />
