@@ -1,5 +1,7 @@
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSession, signIn, signOut } from 'next-auth/react'
+
 import {
   HeartIcon,
   HomeIcon,
@@ -10,6 +12,10 @@ import {
   UserGroupIcon,
 } from '@heroicons/react/outline'
 const Header = () => {
+  const { data: session } = useSession()
+
+  console.log(session)
+
   return (
     <div className="sticky top-0 z-50 border-b bg-white shadow-md ">
       <div className=" flex max-w-6xl justify-between  pl-5 pr-5 lg:mx-auto">
@@ -46,24 +52,35 @@ const Header = () => {
         </div>
 
         {/* Icons */}
-        <div className="flex items-center justify-end  md:space-x-4">
-          <HomeIcon className="navIcon" />
-          <div className="navIcon relative">
-            <PaperAirplaneIcon className="navIcon" />
-            <div className=" absolute -right-2 -top-2 flex h-5 w-5 animate-pulse items-center justify-center rounded-full bg-red-400 text-white">
-              3
+
+        {session ? (
+          <div className="flex items-center justify-end  md:space-x-4">
+            <HomeIcon className="navIcon" />
+            <div className="navIcon relative">
+              <PaperAirplaneIcon className="navIcon" />
+              <div className=" absolute -right-2 -top-2 flex h-5 w-5 animate-pulse items-center justify-center rounded-full bg-red-400 text-white">
+                3
+              </div>
             </div>
+            {/* <MenuIcon className="h-10 cursor-pointer md:hidden" /> */}
+            <PlusCircleIcon className="navIcon" />
+            <UserGroupIcon className="navIcon" />
+            <HeartIcon className="navIcon" />
+            <img
+              // src="https://bit.ly/3LuYuRJ"
+              onClick={signOut}
+              src={session.user.image}
+              alt="profile-picture"
+              className="h-10 cursor-pointer rounded-full transition-all ease-out hover:scale-110"
+            />
           </div>
-          {/* <MenuIcon className="h-10 cursor-pointer md:hidden" /> */}
-          <PlusCircleIcon className="navIcon" />
-          <UserGroupIcon className="navIcon" />
-          <HeartIcon className="navIcon" />
-          <img
-            src="https://bit.ly/3LuYuRJ"
-            alt="profile-picture"
-            className="h-10 cursor-pointer rounded-full transition-all ease-out hover:scale-110"
-          />
-        </div>
+        ) : (
+          <div className="flex items-center justify-end  md:space-x-4">
+            <HomeIcon className="navIcon" />
+
+            <button onClick={signIn}> SignIn</button>
+          </div>
+        )}
       </div>
     </div>
   )
