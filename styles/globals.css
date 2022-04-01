@@ -6,4 +6,8 @@
   .navIcon {
     @apply h-6 w-6 cursor-pointer transition-all duration-150 ease-out hover:scale-125 sm:space-x-0 md:inline-flex;
   }
+
+  .btn {
+    @apply h-7 cursor-pointer transition-all duration-150 ease-out hover:scale-125;
+  }
 }

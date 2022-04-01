@@ -38,7 +38,7 @@ const Header = () => {
               <SearchIcon className="h-6 w-6 text-gray-500 " />
             </div>
             <input
-              className=" focus:ring-none block w-full rounded-md border-gray-400 bg-gray-100  p-1 pl-10 focus:border-gray-900 focus:bg-gray-300 focus:ring-black "
+              className=" focus:ring-none block w-full rounded-md border-gray-400 bg-gray-100  p-1 pl-10 focus:border-gray-900 focus:bg-gray-300 focus:ring-0 "
               type="text"
               placeholder="Search"
             />
