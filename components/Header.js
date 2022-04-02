@@ -2,7 +2,7 @@ import Image from 'next/image'
 import React, { useEffect } from 'react'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { useRouter } from 'next/router'
-
+import { useRecoilState } from 'recoil'
 import {
   HeartIcon,
   HomeIcon,
@@ -12,10 +12,14 @@ import {
   SearchIcon,
   UserGroupIcon,
 } from '@heroicons/react/outline'
+import modalState from '../atoms/modalAtom'
+
+//
+
 const Header = () => {
   const { data: session } = useSession()
   const router = useRouter()
-  console.log(router)
+  const [open, setOpen] = useRecoilState(modalState)
 
   return (
     <div className="sticky top-0 z-50 border-b bg-white shadow-md ">
@@ -70,7 +74,7 @@ const Header = () => {
               </div>
             </div>
             {/* <MenuIcon className="h-10 cursor-pointer md:hidden" /> */}
-            <PlusCircleIcon className="navIcon" />
+            <PlusCircleIcon onClick={() => setOpen(true)} className="navIcon" />
             <UserGroupIcon className="navIcon" />
             <HeartIcon className="navIcon" />
             <img

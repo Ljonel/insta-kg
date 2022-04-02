@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Header from '../components/Header'
 import Section from '../components/Section'
+import Modal from '../components/Modal'
 const Home: NextPage = () => {
   return (
     <div className=" bg-gray-100">
@@ -12,6 +13,7 @@ const Home: NextPage = () => {
       </Head>
       <Header />
       <Section />
+      <Modal />
     </div>
   )
 }

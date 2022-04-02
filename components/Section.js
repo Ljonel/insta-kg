@@ -4,6 +4,7 @@ import Posts from './Posts'
 import SmallProfile from './SmallProfile'
 import Suggestions from './Suggestions'
 import { useSession } from 'next-auth/react'
+
 function Section() {
   const { data: session } = useSession()
   return (
