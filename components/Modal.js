@@ -96,6 +96,7 @@ function Modal() {
                   setSelectedFile(null)
                   setOpen(false)
                 }}
+                className="h-[30%] w-full"
               />
             ) : (
               <div className="btn flex h-[70px] w-[70px] items-center justify-center rounded-full bg-red-200/50">
