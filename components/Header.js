@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import React, { useEffect } from 'react'
 import { useSession, signIn, signOut } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
 import {
   HeartIcon,
@@ -13,14 +14,17 @@ import {
 } from '@heroicons/react/outline'
 const Header = () => {
   const { data: session } = useSession()
-
-  console.log(session)
+  const router = useRouter()
+  console.log(router)
 
   return (
     <div className="sticky top-0 z-50 border-b bg-white shadow-md ">
       <div className=" flex max-w-6xl justify-between  pl-5 pr-5 lg:mx-auto">
         {/* Logo */}
-        <div className="relative hidden w-24 cursor-pointer lg:inline-grid">
+        <div
+          onClick={() => router.push('/')}
+          className="relative hidden w-24 cursor-pointer lg:inline-grid"
+        >
           <h1
             id="insta-logo"
             className=" flex h-full w-full items-center justify-center"
@@ -29,7 +33,10 @@ const Header = () => {
           </h1>
         </div>
 
-        <div className="relative w-10 flex-shrink-0 cursor-pointer lg:hidden">
+        <div
+          onClick={() => router.push('/')}
+          className="relative w-10 flex-shrink-0 cursor-pointer lg:hidden"
+        >
           <Image
             src="https://links.papareact.com/jjm"
             layout="fill"
@@ -55,7 +62,7 @@ const Header = () => {
 
         {session ? (
           <div className="flex items-center justify-end  md:space-x-4">
-            <HomeIcon className="navIcon" />
+            <HomeIcon onClick={() => router.push('/')} className="navIcon" />
             <div className="navIcon relative">
               <PaperAirplaneIcon className="navIcon" />
               <div className=" absolute -right-2 -top-2 flex h-5 w-5 animate-pulse items-center justify-center rounded-full bg-red-400 text-white">
