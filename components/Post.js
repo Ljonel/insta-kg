@@ -13,14 +13,18 @@ import {
   BookmarkAltIcon,
   EmojiHappyIcon,
 } from '@heroicons/react/outline'
+import { HeartIcon as HeartIconLiked } from '@heroicons/react/solid'
 import { useSession } from 'next-auth/react'
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   onSnapshot,
   orderBy,
   query,
   serverTimestamp,
+  setDoc,
 } from 'firebase/firestore'
 import { db } from '../firebase'
 
@@ -28,6 +32,8 @@ function Post({ id, username, userImg, img, caption }) {
   const { data: session } = useSession()
   const [comment, setComment] = useState('')
   const [comments, setComments] = useState([])
+  const [likes, setLikes] = useState([])
+  const [isLike, setIsLike] = useState(false)
 
   useEffect(() => {
     return onSnapshot(
@@ -39,8 +45,17 @@ function Post({ id, username, userImg, img, caption }) {
         setComments(snapshot.docs)
       }
     )
-  }, [db])
+  }, [db, id])
 
+  useEffect(() => {
+    return onSnapshot(collection(db, 'posts', id, 'likes'), (snapshot) =>
+      setLikes(snapshot.docs)
+    )
+  }, [])
+  useEffect(() => {
+    setIsLike(likes.findIndex((like) => like.id === session?.user?.uid) !== -1),
+      [likes]
+  })
   const sendComment = async (e) => {
     e.preventDefault()
     const commentToSend = comment
@@ -53,7 +68,16 @@ function Post({ id, username, userImg, img, caption }) {
       timestamp: serverTimestamp(),
     })
   }
-  console.log(comments)
+  const likePost = async () => {
+    if (isLike) {
+      await deleteDoc(doc(db, 'posts', id, 'likes', session.user.uid))
+    } else {
+      await setDoc(doc(db, 'posts', id, 'likes', session.user.uid), {
+        username: session.user.username,
+      })
+    }
+  }
+
   return (
     <div className="my-7 rounded-sm border bg-white">
       <div className="flex items-center justify-between p-3">
@@ -73,7 +97,11 @@ function Post({ id, username, userImg, img, caption }) {
       {session && (
         <div className="flex justify-between px-3 py-2">
           <div className="flex space-x-4">
-            <HeartIcon className="btn" />
+            {isLike ? (
+              <HeartIconLiked onClick={likePost} className="btn text-red-500" />
+            ) : (
+              <HeartIcon onClick={likePost} className={`btn overflow-hidden`} />
+            )}
             <ChatIcon className="btn" />
             <PaperAirplaneIcon className="btn" />
           </div>
@@ -91,15 +119,15 @@ function Post({ id, username, userImg, img, caption }) {
           {comments.map((c) => (
             <div key={c.id} className="mb-3 flex items-center space-x-2 ">
               <img
-                className="h-8 rounded-full"
+                className=" h-8 rounded-full"
                 src={c.data().userImage}
                 alt=""
               />
               <p className="flex-1 text-sm">
-                <span className=" font-bold">{c.data().username}</span>
+                <span className="mr-2  font-bold">{c.data().username}</span>
                 {c.data().comment}
               </p>
-              <Moment fromNow className="text-sm text-gray-500">
+              <Moment fromNow className="text-xs text-gray-500">
                 {c.data().timestamp?.toDate()}
               </Moment>
             </div>
@@ -119,7 +147,7 @@ function Post({ id, username, userImg, img, caption }) {
             onChange={(e) => setComment(e.target.value)}
           />
           <button
-            disable={!comment.trim()}
+            // disable={!comment.trim()}
             type="submit"
             onClick={sendComment}
             className="font-semibold text-blue-500"
