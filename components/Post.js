@@ -102,14 +102,20 @@ function Post({ id, username, userImg, img, caption }) {
             ) : (
               <HeartIcon onClick={likePost} className={`btn overflow-hidden`} />
             )}
+
             <ChatIcon className="btn" />
             <PaperAirplaneIcon className="btn" />
           </div>
           <BookmarkAltIcon className="btn" />
         </div>
       )}
+
       {/* DESCRIPTION */}
       <p className="truncate p-5">
+        <span className="text-xs font-bold">
+          {' '}
+          {likes.length > 0 && <p>{likes.length} Likes </p>}
+        </span>
         <span className="mr-3 font-bold">{username}</span>
         {caption}
       </p>
