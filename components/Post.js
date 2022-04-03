@@ -86,14 +86,12 @@ function Post({ id, username, userImg, img, caption }) {
           className="mr-3 h-12 w-12 rounded-full object-contain p-1"
           alt=""
         />
-        <p className="flex-1 font-bold">
-          {username} + {id}
-        </p>
+        <p className="flex-1 font-bold">{username}</p>
         <DotsHorizontalIcon className="h-5" />
       </div>
 
       {/*IMG  */}
-      <img src={img} className="w-full " alt="" />
+      <img src={img} className="h-[50%] w-full" alt="" />
 
       {/* BTNS */}
       {session && (
