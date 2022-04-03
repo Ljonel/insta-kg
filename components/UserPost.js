@@ -32,7 +32,6 @@ function UserPost({ id, username, img, caption }) {
 
   const handleEditPost = () => {
     setIsEdited(!isEdited)
-    console.log(editedText)
     const docRef = doc(db, 'posts', id)
     updateDoc(docRef, {
       caption: editedText,
@@ -59,7 +58,6 @@ function UserPost({ id, username, img, caption }) {
           </p>
         }
         <div className="flex w-full justify-between space-x-2 bg-red-50 pr-3">
-          Caption:
           {isEdited ? (
             <input
               type="text"
@@ -78,7 +76,7 @@ function UserPost({ id, username, img, caption }) {
         </div>
 
         <div className="h-full w-full flex-1 overflow-y-scroll bg-white">
-          {comments.length > 0 && (
+          {comments.length > 0 ? (
             <div>
               {comments.map((c) => (
                 <div
@@ -94,6 +92,8 @@ function UserPost({ id, username, img, caption }) {
                 </div>
               ))}
             </div>
+          ) : (
+            <span>No comments</span>
           )}
         </div>
       </div>

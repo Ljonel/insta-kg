@@ -45,7 +45,9 @@ function UserPosts() {
   return (
     <>
       <Header />
-      <h1>Your posts</h1>
+      <h1 className="mt-5 w-full text-center text-2xl">
+        Hi, here are your posts
+      </h1>
       <div className="flex h-screen w-screen flex-grow flex-col items-center justify-evenly md:flex-row ">
         {userPosts.map((x) => (
           <UserPost
