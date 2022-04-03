@@ -1,4 +1,10 @@
-import { collection, deleteDoc, doc, onSnapshot } from 'firebase/firestore'
+import {
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  updateDoc,
+} from 'firebase/firestore'
 import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 import { db } from '../firebase'
@@ -11,6 +17,7 @@ function UserPost({ id, username, img, caption }) {
   const { data: session } = useSession()
   const [comments, setComments] = useState([])
   const [isEdited, setIsEdited] = useState(false)
+  const [editedText, setEditedText] = useState(caption)
   useEffect(() => {
     return onSnapshot(collection(db, 'posts', id, 'likes'), (snapshot) => {
       setLikes(snapshot.docs)
@@ -24,8 +31,12 @@ function UserPost({ id, username, img, caption }) {
   }, [db, id])
 
   const handleEditPost = () => {
-    console.log(isEdited)
     setIsEdited(!isEdited)
+    console.log(editedText)
+    const docRef = doc(db, 'posts', id)
+    updateDoc(docRef, {
+      caption: editedText,
+    })
   }
   const handleDeletePost = () => {
     deleteDoc(doc(db, 'posts', id))
@@ -47,21 +58,30 @@ function UserPost({ id, username, img, caption }) {
             <HeartIcon className=" btn cursor-default text-xs hover:scale-100" />{' '}
           </p>
         }
-        <p className="flex w-full justify-between space-x-2 bg-red-50 pr-3">
-          Caption: {caption}{' '}
+        <div className="flex w-full justify-between space-x-2 bg-red-50 pr-3">
+          Caption:
+          {isEdited ? (
+            <input
+              type="text"
+              value={editedText}
+              onChange={(e) => setEditedText(e.target.value)}
+            />
+          ) : (
+            <p>{caption}</p>
+          )}{' '}
           <span>
             <AiFillEdit
               onClick={handleEditPost}
               className="btn h-[30px] w-[30px]"
             />
           </span>
-        </p>
+        </div>
 
         <div className="h-full w-full flex-1 overflow-y-scroll bg-white">
           {comments.length > 0 && (
             <div>
               {comments.map((c) => (
-                <p
+                <div
                   key={c.id}
                   className="relative ml-3 mt-3 mb-6 flex h-full flex-1 items-center overflow-hidden text-sm"
                 >
@@ -70,9 +90,8 @@ function UserPost({ id, username, img, caption }) {
                   <GrFormClose
                     onClick={() => handleDeleteComment(c.id)}
                     className="absolute right-5 cursor-pointer rounded-full bg-red-500 font-normal transition ease-out hover:scale-125"
-                    rounded-full
                   />
-                </p>
+                </div>
               ))}
             </div>
           )}
