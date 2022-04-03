@@ -67,19 +67,12 @@ const Header = () => {
         {session ? (
           <div className="flex items-center justify-end  md:space-x-4">
             <HomeIcon onClick={() => router.push('/')} className="navIcon" />
-            <div className="navIcon relative">
-              <PaperAirplaneIcon className="navIcon" />
-              <div className=" absolute -right-2 -top-2 flex h-5 w-5 animate-pulse items-center justify-center rounded-full bg-red-400 text-white">
-                3
-              </div>
-            </div>
-            {/* <MenuIcon className="h-10 cursor-pointer md:hidden" /> */}
             <PlusCircleIcon onClick={() => setOpen(true)} className="navIcon" />
-            <UserGroupIcon className="navIcon" />
-            <HeartIcon className="navIcon" />
+            <UserGroupIcon
+              onClick={() => router.push('/users')}
+              className="navIcon"
+            />
             <img
-              // src="https://bit.ly/3LuYuRJ"
-              onClick={signOut}
               src={session.user.image}
               alt="profile-picture"
               className="h-10 cursor-pointer rounded-full transition-all ease-out hover:scale-110"

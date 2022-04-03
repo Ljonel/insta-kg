@@ -53,6 +53,7 @@ function Modal() {
       username: session.user.username,
       caption: enterCaptionRef.current.value,
       profileImg: session.user.image,
+      userId: session.user.uid,
       timestamp: serverTimestamp(),
     })
     //get post id for new post
