@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getDatabase, onValue, ref } from 'firebase/database'
 import { useSession } from 'next-auth/react'
 import Header from '../components/Header'
+import Head from 'next/head'
 import UserPost from './UserPost'
 import {
   collection,
@@ -44,6 +45,10 @@ function UserPosts() {
 
   return (
     <>
+      <Head>
+        <title>Instakilo</title>
+        <link rel="icon" href="" />
+      </Head>
       <Header />
       <h1 className="mt-5 w-full text-center text-2xl">
         Hi, here are your posts

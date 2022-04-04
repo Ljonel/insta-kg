@@ -75,6 +75,7 @@ const Header = () => {
             <img
               src={session.user.image}
               alt="profile-picture"
+              onClick={signOut}
               className="h-10 cursor-pointer rounded-full transition-all ease-out hover:scale-110"
             />
           </div>

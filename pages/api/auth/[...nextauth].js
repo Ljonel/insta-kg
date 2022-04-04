@@ -20,6 +20,7 @@ export default NextAuth({
         .join('')
         .toLocaleLowerCase()
       session.user.uid = token.sub //from token google user id that comes back
+
       return session
       //John Cena
       //to

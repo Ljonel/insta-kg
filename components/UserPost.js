@@ -12,6 +12,7 @@ import { BsFillTrashFill } from 'react-icons/bs'
 import { GrFormClose } from 'react-icons/gr'
 import { AiFillEdit } from 'react-icons/ai'
 import { HeartIcon } from '@heroicons/react/outline'
+
 function UserPost({ id, username, img, caption }) {
   const [likes, setLikes] = useState([])
   const { data: session } = useSession()

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import UserPosts from '../components/UserPosts'
-import { getSession, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 
 function users() {
@@ -9,9 +9,10 @@ function users() {
   useEffect(() => {
     session?.user ? true : router.push('/')
   }, [])
+
   return (
     <div>
-      <UserPosts />
+      <UserPosts /> CHUJ
     </div>
   )
 }
