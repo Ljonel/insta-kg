@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Moment from 'react-moment'
 import {
   DotsHorizontalIcon,
@@ -34,6 +34,7 @@ function Post({ id, username, userImg, img, caption }) {
   const [comments, setComments] = useState([])
   const [likes, setLikes] = useState([])
   const [isLike, setIsLike] = useState(false)
+  const chatRefPicker = useRef(null)
 
   useEffect(() => {
     return onSnapshot(
@@ -59,6 +60,10 @@ function Post({ id, username, userImg, img, caption }) {
   const sendComment = async (e) => {
     e.preventDefault()
     const commentToSend = comment
+    if (comment == '') {
+      alert('Comment can not be empty')
+      return false
+    }
     setComment('')
 
     await addDoc(collection(db, 'posts', id, 'comments'), {
@@ -103,7 +108,10 @@ function Post({ id, username, userImg, img, caption }) {
               <HeartIcon onClick={likePost} className={`btn overflow-hidden`} />
             )}
 
-            <ChatIcon className="btn" />
+            <ChatIcon
+              onClick={() => chatRefPicker.current.focus()}
+              className="btn"
+            />
             <PaperAirplaneIcon className="btn" />
           </div>
           <BookmarkAltIcon className="btn" />
@@ -151,6 +159,7 @@ function Post({ id, username, userImg, img, caption }) {
             value={comment}
             type="text"
             onChange={(e) => setComment(e.target.value)}
+            ref={chatRefPicker}
           />
           <button
             // disable={!comment.trim()}

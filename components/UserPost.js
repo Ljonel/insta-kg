@@ -57,15 +57,16 @@ function UserPost({ id, username, img, caption }) {
             <HeartIcon className=" btn cursor-default text-xs hover:scale-100" />{' '}
           </p>
         }
-        <div className="flex w-full justify-between space-x-2 bg-red-50 pr-3">
+        <div className="flex h-10 w-full items-center justify-between space-x-2  pr-3">
           {isEdited ? (
             <input
               type="text"
               value={editedText}
               onChange={(e) => setEditedText(e.target.value)}
+              className="bg-0 border-blue w-full border-b-4 border-t-0 border-l-0 border-r-0 pl-4 transition-all ease-out focus:border-[rgb(239,205,153)] focus:ring-0"
             />
           ) : (
-            <p>{caption}</p>
+            <p className="pl-4">{caption}</p>
           )}{' '}
           <span>
             <AiFillEdit
