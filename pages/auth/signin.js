@@ -7,7 +7,6 @@ import {
 import Header from '../../components/Header'
 import Head from 'next/head'
 import { db } from '../../firebase'
-
 import {
   addDoc,
   collection,
@@ -25,6 +24,7 @@ import { useRouter } from 'next/router'
 function signIn({ providers, session }) {
   const router = useRouter()
 
+  //add users to firebase
   if (session) {
     const docRef = doc(db, 'users', session.user.uid)
     onSnapshot(docRef, (d) => {
@@ -43,7 +43,7 @@ function signIn({ providers, session }) {
       }
     })
   }
-
+  console.log()
   return (
     <>
       <Head>
@@ -58,15 +58,24 @@ function signIn({ providers, session }) {
         <div className="mt-40 flex w-full items-center justify-center ">
           {Object.values(providers).map((provider) => (
             <div key={provider.name}>
-              <button
-                className="rounded-lg bg-blue-500 p-3 text-white"
-                onClick={() => {
-                  //  signInProvider(provider.id, { callbackUrl: '/' })
-                  signInProvider(provider.id)
-                }}
-              >
-                Sign in with {provider.name}
-              </button>
+              {session ? (
+                <button
+                  onClick={() => router.push('/')}
+                  className="rounded-lg bg-red-300 p-3 text-white transition-all ease-out hover:bg-red-400"
+                >
+                  Return to home page
+                </button>
+              ) : (
+                <button
+                  className="rounded-lg bg-blue-500 p-3 text-white"
+                  onClick={() => {
+                    //  signInProvider(provider.id, { callbackUrl: '/' })
+                    signInProvider(provider.id)
+                  }}
+                >
+                  Sign in with {provider.name}
+                </button>
+              )}
             </div>
           ))}
         </div>

@@ -17,29 +17,6 @@ import {
 } from 'firebase/firestore'
 function Section() {
   const { data: session } = useSession()
-  // useEffect(() => {
-  //   if (session) {
-  //     const docRef = doc(db, 'users', session?.user.uid)
-  //     if (docRef) {
-  //       onSnapshot(docRef, (doc) => {
-  //         if (doc.data()) {
-  //           console.log('istnieje nie mozna dodac')
-  //         } else {
-  //           console.log('nie istnieje wiec dodaje')
-  //           // addDoc(collection(db, 'users'), {
-  //           //   username: session.user.username,
-  //           //   email: session.user.email,
-  //           //   image: session.user.image,
-  //           //   name: session.user.name,
-  //           // })
-  //         }
-  //       })
-  //     } else {
-  //       return false
-  //     }
-  //   }
-  // }, [db])
-
   return (
     <main
       className={`mx-auto grid grid-cols-1 md:max-w-3xl md:grid-cols-2 xl:max-w-6xl xl:grid-cols-3 ${
