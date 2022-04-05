@@ -20,8 +20,9 @@ import Post from './Post'
 //   },
 // ]
 
-function Posts() {
+function Posts({ searchInput }) {
   const [posts, setPosts] = useState([])
+
   useEffect(() => {
     return onSnapshot(
       query(collection(db, 'posts'), orderBy('timestamp', 'desc')),
@@ -31,18 +32,25 @@ function Posts() {
     )
   }, [db])
 
-  // console.log(posts)
+  const postsFiltered = posts.filter(
+    (p) =>
+      p.data().username.includes(searchInput) ||
+      p.data().caption.includes(searchInput)
+  )
+
   return (
     <div>
-      {posts.map((p) => (
-        <Post
-          key={p.id}
-          id={p.id}
-          username={p.data().username}
-          userImg={p.data().profileImg}
-          img={p.data().image}
-          caption={p.data().caption}
-        />
+      {postsFiltered.map((p) => (
+        <div>
+          <Post
+            key={p.id}
+            id={p.id}
+            username={p.data().username}
+            userImg={p.data().profileImg}
+            img={p.data().image}
+            caption={p.data().caption}
+          />
+        </div>
       ))}
     </div>
   )

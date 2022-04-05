@@ -12,7 +12,7 @@ function users() {
 
   return (
     <div>
-      <UserPosts /> CHUJ
+      <UserPosts />
     </div>
   )
 }

@@ -26,7 +26,6 @@ function Stories() {
     }))
 
     setSuggestions(results)
-    // console.log(results)
   }, [])
 
   useEffect(() => {
@@ -34,26 +33,28 @@ function Stories() {
     onSnapshot(colRef, (snapshot) => {
       const arr = []
       snapshot.forEach((s) => {
-        if (s.data().email !== session?.user.email) {
-          arr.push({ ...s.data(), id: doc.id })
-        }
+        // if (s.data().email !== session?.user.email) {
+        arr.push({ ...s.data(), id: s.id })
+        // }
       })
       setRegisteredUsers(arr)
     })
   }, [db])
 
-  console.log(registeredUsers)
   return (
     <div className="mt-8 flex h-[100px] space-x-2 overflow-x-scroll rounded-sm border border-gray-200 bg-white">
-      {session && (
+      {/* {session && (
         <Story img={session.user.image} username={session.user.username} />
-      )}
+      )} */}
 
       {registeredUsers.map((u) => (
-        <Story img={u.image} username={u.username} />
+        <>
+          <Story key="" img={u.image} username={u.username} />
+        </>
       ))}
-      {/* {suggestions.map((p) => (
-        <Story key={p.id} username={p.username} img={p.avatar} />
+
+      {/* {suggestions.map((r) => (
+        <Story key={r.id} img={r.avatar} username={r.username} />
       ))} */}
     </div>
   )

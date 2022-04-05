@@ -53,7 +53,9 @@ function signIn({ providers, session }) {
       <Header />
       <div className="flex h-screen flex-col items-center justify-center ">
         <h1 className=" text-5xl font-medium">Instakilo</h1>
-        <p className="font-xs mt-4 ">This app is built for learn NextJS</p>
+        <p className="font-xs mt-4 ">
+          This app is built for learn NextJS and Firebase
+        </p>
 
         <div className="mt-40 flex w-full items-center justify-center ">
           {Object.values(providers).map((provider) => (

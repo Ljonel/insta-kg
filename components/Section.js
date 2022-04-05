@@ -15,7 +15,7 @@ import {
   onSnapshot,
   getDoc,
 } from 'firebase/firestore'
-function Section() {
+function Section({ searchInput }) {
   const { data: session } = useSession()
   return (
     <main
@@ -26,7 +26,7 @@ function Section() {
       <section className="col-span-2">
         {/* Stories and posts */}
         <Stories />
-        <Posts />
+        <Posts searchInput={searchInput} />
       </section>
 
       {session ? (

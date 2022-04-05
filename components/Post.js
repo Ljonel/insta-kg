@@ -92,7 +92,6 @@ function Post({ id, username, userImg, img, caption }) {
           alt=""
         />
         <p className="flex-1 font-bold">{username}</p>
-        <DotsHorizontalIcon className="h-5" />
       </div>
 
       {/*IMG  */}
