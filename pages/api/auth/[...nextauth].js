@@ -10,6 +10,7 @@ export default NextAuth({
     }),
     // ...add more providers here
   ],
+  secret: 'ahdgsecretsldkjfh',
   pages: {
     signIn: '/auth/signin',
   },
