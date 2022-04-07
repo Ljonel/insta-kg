@@ -41,16 +41,14 @@ function Posts({ searchInput }) {
   return (
     <div>
       {postsFiltered.map((p) => (
-        <div>
-          <Post
-            key={p.id}
-            id={p.id}
-            username={p.data().username}
-            userImg={p.data().profileImg}
-            img={p.data().image}
-            caption={p.data().caption}
-          />
-        </div>
+        <Post
+          key={p.id}
+          id={p.id}
+          username={p.data().username}
+          userImg={p.data().profileImg}
+          img={p.data().image}
+          caption={p.data().caption}
+        />
       ))}
     </div>
   )

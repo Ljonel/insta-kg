@@ -103,7 +103,7 @@ const Header = ({ setSearchInput }) => {
                     className=" h-[30px] w-full  rounded-md text-center hover:bg-blue-300 "
                   >
                     {' '}
-                    Logout
+                    Sign out
                   </button>
 
                   <button

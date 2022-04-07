@@ -48,9 +48,7 @@ function Stories() {
       )} */}
 
       {registeredUsers.map((u) => (
-        <>
-          <Story key="" img={u.image} username={u.username} />
-        </>
+        <Story key={u.id} img={u.image} username={u.username} />
       ))}
 
       {/* {suggestions.map((r) => (
