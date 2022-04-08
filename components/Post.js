@@ -27,6 +27,7 @@ import {
   setDoc,
 } from 'firebase/firestore'
 import { db } from '../firebase'
+import { GrFormClose } from 'react-icons/gr'
 
 function Post({ id, username, userImg, img, caption }) {
   const { data: session } = useSession()
@@ -71,6 +72,7 @@ function Post({ id, username, userImg, img, caption }) {
       username: session.user.username,
       userImage: session.user.image,
       timestamp: serverTimestamp(),
+      userId: session.user.uid,
     })
   }
   const likePost = async () => {
@@ -82,7 +84,10 @@ function Post({ id, username, userImg, img, caption }) {
       })
     }
   }
-
+  const handleDeleteComment = (i) => {
+    console.log(id, i)
+    deleteDoc(doc(db, 'posts', id, 'comments', i))
+  }
   return (
     <div className=" my-7 rounded-sm border bg-white">
       <div className="flex items-center justify-between p-3">
@@ -135,9 +140,17 @@ function Post({ id, username, userImg, img, caption }) {
                 src={c.data().userImage}
                 alt=""
               />
-              <p className="flex-1 text-sm">
+              <p className="relative flex flex-1 items-center text-sm">
                 <span className="mr-2  font-bold">{c.data().username}</span>
                 {c.data().comment}
+                {session?.user.uid === c.data().userId ? (
+                  <GrFormClose
+                    onClick={() => handleDeleteComment(c.id)}
+                    className="btn absolute right-0 h-4 w-4 items-center rounded-full bg-red-500"
+                  />
+                ) : (
+                  <></>
+                )}
               </p>
               <Moment fromNow className="text-xs text-gray-500">
                 {c.data().timestamp?.toDate()}
