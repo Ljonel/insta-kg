@@ -29,5 +29,3 @@ export default NextAuth({
     },
   },
 })
-
-// chuj=https://insta-kg.vercel.app/

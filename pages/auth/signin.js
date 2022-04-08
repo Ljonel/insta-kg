@@ -29,11 +29,10 @@ function signIn({ providers, session }) {
     const docRef = doc(db, 'users', session.user.uid)
     onSnapshot(docRef, (d) => {
       if (d.data()) {
-        console.log('istnieje nie mozna dodac')
+        // console.log('istnieje nie mozna dodac')
         return false
       } else {
-        console.log('nie istnieje dodaje')
-        console.log(d.id)
+        // console.log(d.id)
         setDoc(doc(db, 'users', d.id), {
           username: session.user.username,
           email: session.user.email,
