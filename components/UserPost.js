@@ -45,48 +45,52 @@ function UserPost({ id, username, img, caption }) {
     deleteDoc(doc(db, 'posts', id, 'comments', i))
   }
   return (
-    <div className="relative flex h-[500px] flex-col overflow-hidden rounded-lg border-2 border-gray-500 bg-white p-2 md:w-[400px]">
+    <div className="relative m-4 h-[500px] w-96 overflow-hidden rounded-lg border border-gray-500 bg-white shadow-lg sm:w-[400px]">
       <BsFillTrashFill
         onClick={handleDeletePost}
         className="btn absolute right-5 top-5 rounded-full bg-white"
       />
-      <img className="h-[60%] w-full" src={img} />
-      <div className="h-[40%] w-full flex-row">
+      <div className="h-[50%] w-full items-center ">
+        <img className="h-full w-full" src={img} />
+      </div>
+      <div className="h-[50%] w-full ">
         {
-          <p className="flex">
+          <p className="flex border-y pl-4">
             {likes.length === 0 ? '0' : likes.length}{' '}
             <HeartIcon className=" btn cursor-default text-xs hover:scale-100" />{' '}
           </p>
         }
-        <div className="flex h-10 w-full items-center justify-between space-x-2  pr-3">
+        <div className="flex h-[30%] w-full items-center space-x-2 border-b px-3">
           {isEdited ? (
             <input
               type="text"
               value={editedText}
               onChange={(e) => setEditedText(e.target.value)}
-              className="bg-0 border-blue w-full border-b-4 border-t-0 border-l-0 border-r-0 pl-4 transition-all ease-out focus:border-[rgb(239,205,153)] focus:ring-0"
+              className="bg-0 border-blue h-full w-full border-b-4 border-t-0 border-l-0 border-r-0 pl-4 transition-all ease-out focus:border-[rgb(239,205,153)] focus:ring-0"
             />
           ) : (
-            <p className="pl-4">{caption}</p>
+            <p className="relative max-h-full w-full overflow-y-scroll">
+              {caption}
+            </p>
           )}{' '}
           <span>
             <AiFillEdit
               onClick={handleEditPost}
-              className="btn h-[30px] w-[30px]"
+              className="btn asbolute right-0 top-0 h-[30px] w-[30px]"
             />
           </span>
         </div>
 
-        <div className="h-full w-full flex-1 overflow-y-scroll bg-white">
+        <div className="h-[50%] w-full flex-1 overflow-y-scroll ">
           {comments.length > 0 ? (
             <div>
               {comments.map((c) => (
                 <div
                   key={c.id}
-                  className="relative ml-3 mt-3 mb-6 flex h-full flex-1 items-center overflow-hidden text-sm"
+                  className="relative ml-3 mt-3 mb-6 flex h-full w-full overflow-hidden text-sm"
                 >
                   <span className="mr-2 font-bold">{c.data().username}</span>
-                  {c.data().comment}
+                  <div className="w-[60%]">{c.data().comment}</div>
                   <GrFormClose
                     onClick={() => handleDeleteComment(c.id)}
                     className="absolute right-5 cursor-pointer rounded-full bg-red-500 font-normal transition ease-out hover:scale-125"

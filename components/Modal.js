@@ -24,6 +24,7 @@ function Modal() {
   function handleClickOutside(event) {
     if (closeRef.current && !closeRef.current.contains(event.target)) {
       setOpen(false)
+      console.log(open)
     }
   }
   useEffect(() => {
@@ -84,7 +85,7 @@ function Modal() {
         <div
           className={`${
             open && 'flex'
-          } fixed top-0  min-h-[800px] w-full items-center justify-center bg-[rgba(0,0,0,0.5)]`}
+          } fixed top-0  h-full min-h-[800px] w-full items-center justify-center bg-[rgba(0,0,0,0.5)]`}
         >
           <div
             ref={closeRef}

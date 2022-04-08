@@ -84,7 +84,7 @@ function Post({ id, username, userImg, img, caption }) {
   }
 
   return (
-    <div className="my-7 rounded-sm border bg-white">
+    <div className=" my-7 rounded-sm border bg-white">
       <div className="flex items-center justify-between p-3">
         <img
           src={userImg}
@@ -95,8 +95,9 @@ function Post({ id, username, userImg, img, caption }) {
       </div>
 
       {/*IMG  */}
-      <img src={img} className="h-[50%] w-full" alt="" />
-
+      <div className=" flex h-[500px] w-full justify-center">
+        <img src={img} className="" alt="" />
+      </div>
       {/* BTNS */}
       {session && (
         <div className="flex justify-between px-3 py-2">
@@ -111,9 +112,7 @@ function Post({ id, username, userImg, img, caption }) {
               onClick={() => chatRefPicker.current.focus()}
               className="btn"
             />
-            <PaperAirplaneIcon className="btn" />
           </div>
-          <BookmarkAltIcon className="btn" />
         </div>
       )}
 
@@ -128,7 +127,7 @@ function Post({ id, username, userImg, img, caption }) {
       </p>
 
       {comments.length > 0 && (
-        <div className="ml-10 mr-10 h-20 overflow-y-scroll">
+        <div className="min-h-20 ml-10 mr-10 max-h-40 overflow-x-hidden overflow-y-scroll">
           {comments.map((c) => (
             <div key={c.id} className="mb-3 flex items-center space-x-2 ">
               <img

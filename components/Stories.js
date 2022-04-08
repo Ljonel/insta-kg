@@ -42,11 +42,7 @@ function Stories() {
   }, [db])
 
   return (
-    <div className="mt-8 flex h-[100px] space-x-2 overflow-x-scroll rounded-sm border border-gray-200 bg-white">
-      {/* {session && (
-        <Story img={session.user.image} username={session.user.username} />
-      )} */}
-
+    <div className="mt-8 flex h-[100px] items-center space-x-2 overflow-x-auto rounded-sm border border-gray-200 bg-white pl-2">
       {registeredUsers.map((u) => (
         <Story key={u.id} img={u.image} username={u.username} />
       ))}
