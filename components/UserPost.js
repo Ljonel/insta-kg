@@ -81,7 +81,7 @@ function UserPost({ id, username, img, caption }) {
           </span>
         </div>
 
-        <div className="h-[50%] w-full flex-1 overflow-y-scroll ">
+        <div className="h-[50%] w-full flex-1 overflow-x-hidden overflow-y-scroll">
           {comments.length > 0 ? (
             <div>
               {comments.map((c) => (
