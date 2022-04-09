@@ -135,11 +135,11 @@ function Post({ id, username, userImg, img, caption }) {
       </p>
 
       {comments.length > 0 && (
-        <div className="min-h-20 mr-10 flex max-h-40 w-full flex-col items-center overflow-y-auto  overflow-x-hidden ">
+        <div className="min-h-20 mt-2 mr-10 flex max-h-40 w-full flex-col items-center overflow-y-auto  overflow-x-hidden ">
           {comments.map((c) => (
             <div
               key={c.id}
-              className="min-h-20 relative mb-4  flex w-[95%] space-x-2  p-2 "
+              className="min-h-20 relative mb-4 flex w-full items-center space-x-4 px-4  "
               style={{ wordWrap: 'break-word' }}
             >
               <img
@@ -151,9 +151,9 @@ function Post({ id, username, userImg, img, caption }) {
                 className=" flex w-full flex-1 text-sm"
                 style={{ wordWrap: 'break-word', whiteSpace: 'normal' }}
               > */}
-              <span className="w-30 mr-2 font-bold">{c.data().username}</span>
+              <span className="mr-2 w-32 font-bold">{c.data().username}</span>
               {
-                <div className=" h-full w-[60%] overflow-y-auto ">
+                <div className=" h-full w-[55%] overflow-y-auto ">
                   {c.data().comment}
                 </div>
               }
@@ -163,8 +163,7 @@ function Post({ id, username, userImg, img, caption }) {
                   className="btn absolute right-2 h-4 w-4 max-w-[10%] items-center rounded-full bg-red-500"
                 />
               ) : null}
-              {/* </p> */}
-              <Moment fromNow className="text-xs text-gray-500">
+              <Moment fromNow className="min-w-24 text-xs text-gray-500">
                 {c.data().timestamp?.toDate()}
               </Moment>
             </div>

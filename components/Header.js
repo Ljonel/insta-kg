@@ -3,17 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useRecoilState } from 'recoil'
-import {
-  HeartIcon,
-  HomeIcon,
-  MenuIcon,
-  PaperAirplaneIcon,
-  PlusCircleIcon,
-  SearchIcon,
-  UserGroupIcon,
-} from '@heroicons/react/outline'
+import { PlusCircleIcon, SearchIcon } from '@heroicons/react/outline'
 import modalState from '../atoms/modalAtom'
-
+import { CgHome, CgNotes } from 'react-icons/cg'
+import { AiOutlineHome, AiOutlinePlusCircle } from 'react-icons/ai'
 //
 
 const Header = ({ setSearchInput }) => {
@@ -31,7 +24,7 @@ const Header = ({ setSearchInput }) => {
         router.pathname === '/users' ? ' min-h-[60px]  justify-center' : ''
       } border-b bg-white shadow-md `}
     >
-      <div className=" flex h-[60px]  max-w-6xl justify-between  lg:mx-auto">
+      <div className=" flex h-[60px] max-w-6xl justify-between px-4 lg:mx-auto  lg:px-1">
         {/* Logo */}
         <div
           onClick={() => router.push('/')}
@@ -82,9 +75,18 @@ const Header = ({ setSearchInput }) => {
 
         {session ? (
           <div className="flex w-full items-center justify-end space-x-4 md:w-auto md:space-x-4">
-            <HomeIcon onClick={() => router.push('/')} className="navIcon" />
-            <PlusCircleIcon onClick={() => setOpen(true)} className="navIcon" />
-            <UserGroupIcon
+            <AiOutlineHome
+              title="Home"
+              onClick={() => router.push('/')}
+              className="navIcon"
+            />
+            <AiOutlinePlusCircle
+              title="Add Post"
+              onClick={() => setOpen(true)}
+              className="navIcon"
+            />
+            <CgNotes
+              title="My Posts"
               onClick={() => router.push('/users')}
               className="navIcon"
             />
@@ -97,7 +99,7 @@ const Header = ({ setSearchInput }) => {
               />
 
               {avatarMenuOpen && (
-                <div className="absolute right-[-20px] mr-[50%] mt-3 flex w-[100px] flex-col space-y-3 bg-white p-3">
+                <div className="absolute right-[-20px] mr-[50%] mt-3 flex w-[100px] flex-col space-y-3 border bg-white p-3">
                   <button
                     onClick={signOut}
                     className=" h-[30px] w-full  rounded-md text-center hover:bg-blue-300 "
@@ -119,7 +121,7 @@ const Header = ({ setSearchInput }) => {
           </div>
         ) : (
           <div className="flex items-center justify-end  md:space-x-4">
-            <HomeIcon className="navIcon" />
+            <AiOutlineHome title="Home" className="navIcon" />
 
             <button onClick={signIn}> SignIn</button>
           </div>

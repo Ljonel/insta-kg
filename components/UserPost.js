@@ -45,7 +45,7 @@ function UserPost({ id, username, img, caption }) {
     deleteDoc(doc(db, 'posts', id, 'comments', i))
   }
   return (
-    <div className="relative m-4 h-[500px] w-96 overflow-hidden rounded-lg border border-gray-500 bg-white shadow-lg sm:w-[400px]">
+    <div className="relative m-4 h-[500px] w-[90%] overflow-hidden rounded-lg border border-gray-500 bg-white shadow-lg sm:w-[400px]">
       <BsFillTrashFill
         onClick={handleDeletePost}
         className="btn absolute right-5 top-5 rounded-full bg-white"
@@ -70,7 +70,7 @@ function UserPost({ id, username, img, caption }) {
             />
           ) : (
             <p
-              className="relative max-h-full w-full overflow-y-scroll "
+              className="relative max-h-full w-full overflow-y-auto "
               style={{ wordWrap: 'break-word', whiteSpace: 'initial' }}
             >
               {caption}
@@ -84,13 +84,13 @@ function UserPost({ id, username, img, caption }) {
           </span>
         </div>
 
-        <div className="h-[50%] w-full flex-1 overflow-x-hidden overflow-y-scroll">
+        <div className="h-[50%] w-full flex-1 overflow-y-auto overflow-x-hidden">
           {comments.length > 0 ? (
             <div>
               {comments.map((c) => (
                 <div
                   key={c.id}
-                  className="relative ml-3 mt-3 mb-6 flex h-full w-full overflow-hidden text-sm"
+                  className="relative ml-3 mt-3 mb-6 flex h-full w-full overflow-hidden pt-2 text-sm"
                   style={{ wordWrap: 'break-word', whiteSpace: 'initial' }}
                 >
                   <span className="mr-2 font-bold">{c.data().username}</span>

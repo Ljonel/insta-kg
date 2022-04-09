@@ -19,14 +19,6 @@ function Stories() {
   const [suggestions, setSuggestions] = useState([])
   const [registeredUsers, setRegisteredUsers] = useState([])
   const { data: session } = useSession()
-  useEffect(() => {
-    const results = [...Array(20)].map((_, i) => ({
-      ...faker.helpers.contextualCard(),
-      id: i,
-    }))
-
-    setSuggestions(results)
-  }, [])
 
   useEffect(() => {
     const colRef = collection(db, 'users')
@@ -42,14 +34,17 @@ function Stories() {
   }, [db])
 
   return (
-    <div className="mt-8 flex h-[100px] items-center space-x-2 overflow-x-auto rounded-sm border border-gray-200 bg-white pl-2">
-      {registeredUsers.map((u) => (
-        <Story key={u.id} img={u.image} username={u.username} />
-      ))}
+    <div className="flex flex-col  ">
+      <h3 className="flex h-full p-2">Registered Users</h3>
+      <div className="flex min-h-[100px] items-center space-x-2 overflow-x-auto rounded-sm border border-gray-200 bg-white pl-2">
+        {registeredUsers.map((u) => (
+          <Story key={u.id} img={u.image} username={u.username} />
+        ))}
 
-      {/* {suggestions.map((r) => (
+        {/* {suggestions.map((r) => (
         <Story key={r.id} img={r.avatar} username={r.username} />
       ))} */}
+      </div>
     </div>
   )
 }
