@@ -89,7 +89,7 @@ function Post({ id, username, userImg, img, caption }) {
     deleteDoc(doc(db, 'posts', id, 'comments', i))
   }
   return (
-    <div className=" my-7 rounded-sm border bg-white">
+    <div className=" my-7 w-full rounded-sm border bg-white">
       <div className="flex items-center justify-between p-3">
         <img
           src={userImg}
@@ -122,36 +122,48 @@ function Post({ id, username, userImg, img, caption }) {
       )}
 
       {/* DESCRIPTION */}
-      <p className="truncate p-5">
+      <p
+        className="max-h-[300px] w-full overflow-y-auto   p-5"
+        style={{ wordWrap: 'break-word', whiteSpace: 'initial' }}
+      >
         <span className="text-xs font-bold">
           {' '}
           {likes.length > 0 && <p>{likes.length} Likes </p>}
         </span>
         <span className="mr-3 font-bold">{username}</span>
-        {caption}
+        <span>{caption}</span>
       </p>
 
       {comments.length > 0 && (
-        <div className="min-h-20 ml-10 mr-10 max-h-40 overflow-x-hidden overflow-y-scroll">
+        <div className="min-h-20 mr-10 flex max-h-40 w-full flex-col items-center overflow-y-auto  overflow-x-hidden ">
           {comments.map((c) => (
-            <div key={c.id} className="mb-3 flex items-center space-x-2 ">
+            <div
+              key={c.id}
+              className="min-h-20 relative mb-4  flex w-[95%] space-x-2  p-2 "
+              style={{ wordWrap: 'break-word' }}
+            >
               <img
                 className=" h-8 rounded-full"
                 src={c.data().userImage}
                 alt=""
               />
-              <p className="relative flex flex-1 items-center text-sm">
-                <span className="mr-2  font-bold">{c.data().username}</span>
-                {c.data().comment}
-                {session?.user.uid === c.data().userId ? (
-                  <GrFormClose
-                    onClick={() => handleDeleteComment(c.id)}
-                    className="btn absolute right-0 h-4 w-4 items-center rounded-full bg-red-500"
-                  />
-                ) : (
-                  <></>
-                )}
-              </p>
+              {/* <p
+                className=" flex w-full flex-1 text-sm"
+                style={{ wordWrap: 'break-word', whiteSpace: 'normal' }}
+              > */}
+              <span className="w-30 mr-2 font-bold">{c.data().username}</span>
+              {
+                <div className=" h-full w-[60%] overflow-y-auto ">
+                  {c.data().comment}
+                </div>
+              }
+              {session?.user.uid === c.data().userId ? (
+                <GrFormClose
+                  onClick={() => handleDeleteComment(c.id)}
+                  className="btn absolute right-2 h-4 w-4 max-w-[10%] items-center rounded-full bg-red-500"
+                />
+              ) : null}
+              {/* </p> */}
               <Moment fromNow className="text-xs text-gray-500">
                 {c.data().timestamp?.toDate()}
               </Moment>

@@ -53,7 +53,7 @@ function UserPosts() {
       <h1 className="mt-5 w-full text-center text-2xl">
         Hi, here are your posts
       </h1>
-      <div className="flex min-h-screen w-screen flex-col items-center justify-evenly md:flex-row ">
+      <div className="flex min-h-screen w-screen flex-col flex-wrap items-center justify-evenly md:flex-row ">
         {userPosts.map((x) => (
           <UserPost
             key={x.id}

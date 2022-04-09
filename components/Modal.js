@@ -85,52 +85,54 @@ function Modal() {
         <div
           className={`${
             open && 'flex'
-          } fixed top-0  h-full min-h-[800px] w-full items-center justify-center bg-[rgba(0,0,0,0.5)]`}
+          } fixed top-0  h-full min-h-[800px] w-full items-center justify-center overflow-x-hidden bg-[rgba(0,0,0,0.5)]`}
         >
           <div
             ref={closeRef}
             className="relative flex h-[400px] w-[400px] flex-col items-center justify-evenly rounded-lg bg-white shadow-sm "
           >
-            {selectedFile ? (
-              <img
-                src={selectedFile}
-                onClick={() => {
-                  setSelectedFile(null)
-                  setOpen(false)
-                }}
-                className="h-[30%] w-full"
-              />
-            ) : (
-              <div className="btn flex h-[70px] w-[70px] items-center justify-center rounded-full bg-red-200/50">
-                <CameraIcon
-                  onClick={() => filePickerRef.current.click()}
-                  className=" h-[80%] w-[80%]"
-                  type="file"
+            <div className="flex h-[60%] min-w-full justify-center ">
+              {selectedFile ? (
+                <img
+                  src={selectedFile}
+                  onClick={() => {
+                    setSelectedFile(null)
+                    setOpen(false)
+                  }}
+                  className="max-h-full  max-w-full object-contain"
                 />
-              </div>
-            )}
-
+              ) : (
+                <div className=" flex h-full w-full items-center justify-center">
+                  <CameraIcon
+                    onClick={() => filePickerRef.current.click()}
+                    className=" btn h-[90px] w-[90px] rounded-full bg-red-200/50 p-4"
+                    type="file"
+                  />
+                </div>
+              )}
+            </div>
             <input
               type="file"
               hidden
               ref={filePickerRef}
               onChange={addImageToPost}
             />
-
-            <input
-              type="text"
-              placeholder="Enter a caption"
-              ref={enterCaptionRef}
-              className="w-[80%]  border-x-0 border-t-0 border-b-4 border-red-200 pl-10 transition ease-out focus:border-b-red-400 focus:ring-0"
-            />
-            <button
-              onClick={uploadPost}
-              type="button"
-              disabled={!selectedFile}
-              className="h-[50px] w-[90%] rounded-lg bg-red-200 transition-all ease-out hover:bg-red-400"
-            >
-              {loading ? 'Uploading' : 'Upload post'}
-            </button>
+            <div className="flex h-[40%] w-full flex-col items-center justify-evenly ">
+              <input
+                type="text"
+                placeholder="Enter a caption"
+                ref={enterCaptionRef}
+                className="w-[80%]  border-x-0 border-t-0 border-b-4 border-red-200 pl-10 transition ease-out focus:border-b-red-400 focus:ring-0"
+              />
+              <button
+                onClick={uploadPost}
+                type="button"
+                disabled={!selectedFile}
+                className="h-[50px] w-[90%] rounded-lg bg-red-200 transition-all ease-out hover:bg-red-400"
+              >
+                {loading ? 'Uploading' : 'Upload post'}
+              </button>
+            </div>
           </div>
         </div>
       )}
