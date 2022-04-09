@@ -4,7 +4,7 @@ function SmallProfile() {
   const { data: session } = useSession()
 
   return (
-    <div className="mt-14 ml-10 flex items-center justify-between ">
+    <div className="mt-4 flex items-center justify-between px-5 xl:mt-14 xl:ml-10 xl:p-0 ">
       <img
         className="h-16 w-16 rounded-full border p-[2px]"
         src={session.user.image}

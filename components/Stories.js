@@ -15,23 +15,20 @@ import {
 import { db, storage } from '../firebase'
 
 //
-function Stories() {
-  const [suggestions, setSuggestions] = useState([])
-  const [registeredUsers, setRegisteredUsers] = useState([])
+function Stories({ registeredUsers }) {
   const { data: session } = useSession()
-
-  useEffect(() => {
-    const colRef = collection(db, 'users')
-    onSnapshot(colRef, (snapshot) => {
-      const arr = []
-      snapshot.forEach((s) => {
-        // if (s.data().email !== session?.user.email) {
-        arr.push({ ...s.data(), id: s.id })
-        // }
-      })
-      setRegisteredUsers(arr)
-    })
-  }, [db])
+  // useEffect(() => {
+  //   const colRef = collection(db, 'users')
+  //   onSnapshot(colRef, (snapshot) => {
+  //     const arr = []
+  //     snapshot.forEach((s) => {
+  //       // if (s.data().email !== session?.user.email) {
+  //       arr.push({ ...s.data(), id: s.id })
+  //       // }
+  //     })
+  //     setRegisteredUsers(arr)
+  //   })
+  // }, [db])
 
   return (
     <div className="flex flex-col  ">
@@ -40,10 +37,6 @@ function Stories() {
         {registeredUsers.map((u) => (
           <Story key={u.id} img={u.image} username={u.username} />
         ))}
-
-        {/* {suggestions.map((r) => (
-        <Story key={r.id} img={r.avatar} username={r.username} />
-      ))} */}
       </div>
     </div>
   )
