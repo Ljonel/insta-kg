@@ -3,23 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { db } from '../firebase'
 import Post from './Post'
 
-// const posts = [
-//   {
-//     id: '1',
-//     username: 'asd',
-//     userImg: 'https://bit.ly/3LuYuRJ',
-//     img: 'https://bit.ly/3LuYuRJ',
-//     caption: 'ESSA BYQ',
-//   },
-//   {
-//     id: '2',
-//     username: 'asd',
-//     userImg: 'https://bit.ly/3LuYuRJ',
-//     img: 'https://bit.ly/3LuYuRJ',
-//     caption: 'ESSA BYQ',
-//   },
-// ]
-
 function Posts({ searchInput }) {
   const [posts, setPosts] = useState([])
 

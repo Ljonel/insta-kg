@@ -75,6 +75,7 @@ function Post({ id, username, userImg, img, caption }) {
       userId: session.user.uid,
     })
   }
+
   const likePost = async () => {
     if (isLike) {
       await deleteDoc(doc(db, 'posts', id, 'likes', session.user.uid))
@@ -139,7 +140,7 @@ function Post({ id, username, userImg, img, caption }) {
           {comments.map((c) => (
             <div
               key={c.id}
-              className="min-h-20 relative mb-4 flex w-full items-start space-x-4  px-4 sm:items-center  "
+              className="min-h-20 relative mb-4 flex w-full items-start space-x-4 py-2 px-4 sm:items-start  "
               style={{ wordWrap: 'break-word' }}
             >
               <img
@@ -167,7 +168,7 @@ function Post({ id, username, userImg, img, caption }) {
               ) : null}
               <Moment
                 fromNow
-                className=" w-32 pr-4 text-center text-xs text-gray-500"
+                className=" w-36 pr-4 text-center text-xs text-gray-500"
               >
                 {c.data().timestamp?.toDate()}
               </Moment>

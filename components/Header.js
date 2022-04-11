@@ -7,7 +7,18 @@ import { PlusCircleIcon, SearchIcon } from '@heroicons/react/outline'
 import modalState from '../atoms/modalAtom'
 import { CgHome, CgNotes } from 'react-icons/cg'
 import { AiOutlineHome, AiOutlinePlusCircle } from 'react-icons/ai'
+import Link from 'next/link'
 //
+
+export async function getStaticProps() {
+  return {
+    props: {
+      id: session.user.uid,
+      username: session.user.username,
+      email: session.user.email,
+    }, // will be passed to the page component as props
+  }
+}
 
 const Header = ({ setSearchInput }) => {
   const { data: session } = useSession()
@@ -18,6 +29,7 @@ const Header = ({ setSearchInput }) => {
   const inputSearchHandler = (e) => {
     setSearchInput(e.target.value)
   }
+
   return (
     <div
       className={`sticky top-0 z-50 ${
@@ -90,6 +102,7 @@ const Header = ({ setSearchInput }) => {
               onClick={() => router.push('/users')}
               className="navIcon"
             />
+
             <div className="relative">
               <img
                 src={session.user.image}
@@ -100,12 +113,21 @@ const Header = ({ setSearchInput }) => {
 
               {avatarMenuOpen && (
                 <div className="absolute right-[-20px] mr-[50%] mt-3 flex w-[100px] flex-col space-y-3 border bg-white p-3">
-                  <button
-                    onClick={signOut}
+                  {/* <button
+                    onClick={() =>
+                      router.push(`/profile/${session.user.username}`)
+                    }
                     className=" h-[30px] w-full  rounded-md text-center hover:bg-blue-300 "
                   >
                     {' '}
-                    Sign out
+                    Profile
+                  </button> */}
+                  <button
+                    onClick={() => router.push('/profile/' + session.user.uid)}
+                    className=" h-[30px] w-full  rounded-md text-center hover:bg-blue-300 "
+                  >
+                    {' '}
+                    Profile
                   </button>
 
                   <button
@@ -114,6 +136,13 @@ const Header = ({ setSearchInput }) => {
                   >
                     {' '}
                     My posts
+                  </button>
+                  <button
+                    onClick={signOut}
+                    className=" h-[30px] w-full  rounded-md text-center hover:bg-red-300 "
+                  >
+                    {' '}
+                    Sign out
                   </button>
                 </div>
               )}
