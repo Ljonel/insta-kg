@@ -44,7 +44,7 @@ function UserPosts() {
   }, [db, users])
 
   return (
-    <>
+    <div className="overflow-x-hidden">
       <Head>
         <title>Instakilo</title>
         <link rel="icon" href="" />
@@ -64,7 +64,7 @@ function UserPosts() {
           />
         ))}
       </div>
-    </>
+    </div>
   )
 }
 

@@ -99,7 +99,7 @@ function Modal() {
                     setSelectedFile(null)
                     setOpen(false)
                   }}
-                  className="max-h-full  max-w-full object-contain"
+                  className="max-h-full  max-w-full object-cover"
                 />
               ) : (
                 <div className=" flex h-full w-full items-center justify-center">

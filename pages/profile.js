@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import Header from '../../components/Header'
+import Header from '../components/Header'
 import { useSession } from 'next-auth/react'
 import {
   addDoc,
@@ -14,11 +14,13 @@ import {
   query,
   serverTimestamp,
   setDoc,
+  where,
 } from 'firebase/firestore'
-import { db } from '../../firebase'
-import Modal from '../../components/Modal'
-import UserPost from '../../components/UserPost'
+import { db } from '../firebase'
+import Modal from '../components/Modal'
 import { GrClose } from 'react-icons/gr'
+import WatchedUser from '../components/WatchedUser'
+
 function LoggedUser() {
   const { data: session } = useSession()
   const router = useRouter()
@@ -34,6 +36,7 @@ function LoggedUser() {
   const [openMyFollowers, setOpenMyFollowers] = useState(false)
   const [openWatchedUsers, setOpenWatchedUsers] = useState(false)
   const [usersId, setUsersId] = useState([])
+  const urlId = router.query.user
   //#region
   useEffect(() => {
     session?.user ? true : router.push('/')
@@ -87,30 +90,29 @@ function LoggedUser() {
   }, [])
 
   //Get users who are watched by actually log user
-  useEffect(() => {
-    return onSnapshot(collection(db, 'users'), (snapshot) => {
-      const arr = []
+  useEffect(async () => {
+    const arr = []
+    onSnapshot(collection(db, 'users'), (snapshot) => {
       snapshot.docs.forEach((doc) => {
         arr.push({ ...doc.data(), id: doc.id })
       })
       setUsersId(arr)
     })
-  }, [])
+  }, [db])
 
   useEffect(() => {
     const arr2 = []
     usersId.map((u) => {
-      return onSnapshot(
-        collection(db, 'users', u.id, 'followers'),
-        (snapshot) => {
-          snapshot.docs.forEach((doc) => {
-            if (doc.id === session?.user.uid) {
-              arr2.push({ ...u, id: u.id })
-            }
-          })
-          setWatchedUsers(arr2)
-        }
-      )
+      const docRef = collection(db, 'users', u.id, 'followers')
+
+      onSnapshot(docRef, (doc) => {
+        doc.docs.forEach((x) => {
+          if (x.id === session.user.uid) {
+            arr2.push({ ...u, id: u.id })
+          }
+        })
+        setWatchedUsers(arr2)
+      })
     })
   }, [db, usersId])
 
@@ -118,13 +120,11 @@ function LoggedUser() {
   const handleDeleteMyFollower = async (i) => {
     await deleteDoc(doc(db, 'users', session?.user.uid, 'followers', i))
   }
-
-  const handleDeleteFollow = async (i) => {
-    await deleteDoc(doc(db, 'users', i, 'followers', session?.user.uid))
+  const setOpenWatchedUsersHandler = (v) => {
+    setOpenWatchedUsers(v)
   }
-
   return (
-    <div className="relative">
+    <div className="relative overflow-x-hidden">
       {session && (
         <div>
           <Header />
@@ -146,34 +146,28 @@ function LoggedUser() {
                   <div className="flex flex-col justify-evenly px-5">
                     <p>
                       Posts:
-                      <button className="ml-1 font-bold">
+                      <span className="ml-1 font-bold">
                         {' '}
                         {userPosts.length}
-                      </button>
-                    </p>
-                    <p
-                      onClick={() => setOpenMyFollowers(true)}
-                      className="max-w-[100px] cursor-pointer "
-                    >
-                      Followers:
-                      <span className="ml-1 w-auto font-bold">
-                        {myFollowers.length}
                       </span>
                     </p>
                     <p
-                      onClick={() => setOpenWatchedUsers(true)}
-                      className="max-w-[100px] cursor-pointer"
+                      onClick={() => setOpenMyFollowers(true)}
+                      className="max-w-[150px] cursor-pointer underline transition ease-out hover:text-blue-300 "
                     >
-                      Following:
-                      <button className="ml-1 font-bold">
-                        {watchedUsers.length}
-                      </button>
+                      Your Followers
+                    </p>
+                    <p
+                      onClick={() => setOpenWatchedUsersHandler(true)}
+                      className="max-w-[150px] cursor-pointer underline transition ease-out hover:text-blue-300"
+                    >
+                      Yours Followings
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className=" mt-5 flex h-[70%] flex-wrap items-center justify-center  ">
+              <div className="flex-shrink-1 mt-5 flex  h-[70%] flex-wrap justify-center bg-red-500  ">
                 {userPosts.length > 0
                   ? userPosts.map((p) => (
                       <div
@@ -227,25 +221,17 @@ function LoggedUser() {
                       <h3 className="flex h-10 items-center justify-center border-b font-bold ">
                         Following
                         <GrClose
-                          onClick={() => setOpenWatchedUsers(false)}
+                          onClick={() => setOpenWatchedUsersHandler(false)}
                           className="btn absolute right-4"
                         />
                       </h3>
-                      {watchedUsers &&
-                        watchedUsers.map((watch) => (
-                          <div
-                            key={watch.id}
-                            className="my-2 flex h-10 w-full items-center border-b pb-2"
-                          >
-                            <div className="ml-2 flex h-full w-[80%] items-center space-x-4 ">
-                              <img
-                                src={watch.image}
-                                className="h-8 w-8 rounded-full"
-                              />
-                              <h3 className="font-bold">{watch.username}</h3>
-                            </div>
-                          </div>
-                        ))}
+                      {watchedUsers.map((watch) => (
+                        <WatchedUser
+                          id={watch.id}
+                          image={watch.image}
+                          username={watch.username}
+                        />
+                      ))}
                     </div>
                   </div>
                 ) : null}

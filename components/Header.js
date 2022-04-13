@@ -64,7 +64,7 @@ const Header = ({ setSearchInput }) => {
         {/* Search input */}
         <div className="max-w-xs">
           <div className="relative mt-1 flex rounded-md p-3">
-            {router.pathname !== '/users' ? (
+            {router.pathname === '/' ? (
               <div>
                 <div className="pointer-events-none absolute inset-y-0 flex items-center pl-3">
                   <SearchIcon className="h-6 w-6 text-gray-500 " />
@@ -113,15 +113,6 @@ const Header = ({ setSearchInput }) => {
 
               {avatarMenuOpen && (
                 <div className="absolute right-[-20px] mr-[50%] mt-3 flex w-[100px] flex-col space-y-3 border bg-white p-3">
-                  {/* <button
-                    onClick={() =>
-                      router.push(`/profile/${session.user.username}`)
-                    }
-                    className=" h-[30px] w-full  rounded-md text-center hover:bg-blue-300 "
-                  >
-                    {' '}
-                    Profile
-                  </button> */}
                   <button
                     onClick={() => router.push('/profile/' + session.user.uid)}
                     className=" h-[30px] w-full  rounded-md text-center hover:bg-blue-300 "

@@ -11,7 +11,7 @@ function users() {
   }, [])
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <UserPosts />
       <Modal />
     </div>
