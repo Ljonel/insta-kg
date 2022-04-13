@@ -94,7 +94,7 @@ function UserProfile() {
 
   useEffect(async () => {
     checkFollow()
-  }, [checkIfIsFollowedByLoggedUser])
+  }, [db, id, checkIfIsFollowedByLoggedUser])
   const checkFollow = async () => {
     onSnapshot(collection(db, 'users', id, 'followers'), (snapshot) => {
       const decision = false
