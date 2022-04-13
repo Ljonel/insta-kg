@@ -171,7 +171,7 @@ function UserProfile() {
             </div>
 
             <div className="flex w-full flex-wrap justify-center border-t-2 ">
-              <div className=" flex w-[925px] flex-wrap justify-center  xd:justify-start">
+              <div className=" flex w-[925px] flex-wrap justify-center  pt-4 xd:justify-start">
                 {userPosts.map((post) => (
                   <ProfilePosts
                     key={post.id}

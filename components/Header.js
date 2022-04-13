@@ -36,7 +36,7 @@ const Header = ({ setSearchInput }) => {
         router.pathname === '/users' ? ' min-h-[60px]  justify-center' : ''
       } border-b bg-white shadow-md `}
     >
-      <div className=" flex h-[60px] w-full max-w-6xl justify-between  px-4 xl:px-0">
+      <div className=" flex h-[60px] w-full max-w-6xl justify-between px-4 xl:px-0">
         {/* Logo */}
         <div
           onClick={() => router.push('/')}
@@ -44,7 +44,7 @@ const Header = ({ setSearchInput }) => {
         >
           <h1
             id="insta-logo"
-            className=" flex h-full w-full items-center justify-center"
+            className=" flex h-full w-full items-center justify-center md:justify-start"
           >
             InstaKilo
           </h1>
