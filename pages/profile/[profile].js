@@ -32,8 +32,8 @@ function UserProfile() {
   const [following, setFollowing] = useState([])
   const [isFollowersOpen, setIsFollowersOpen] = useState(false)
   const [isFollowingOpen, setIsFollowingOpen] = useState(false)
-  const [checkIfIsFollowedByLoggedUser, setcheckIfIsFollowedByLoggedUser] =
-    useState()
+  const [checkIfIsFollowedByLoggedUser, setCheckIfIsFollowedByLoggedUser] =
+    useState(false)
   //get user data
   useEffect(() => {
     return onSnapshot(collection(db, 'users'), (snapshot) => {
@@ -92,31 +92,31 @@ function UserProfile() {
     deleteDoc(doc(db, 'users', session?.user.uid, 'followers', i))
   }
 
-  useEffect(() => {
+  useEffect(async () => {
+    checkFollow()
+  }, [checkIfIsFollowedByLoggedUser])
+  const checkFollow = async () => {
     onSnapshot(collection(db, 'users', id, 'followers'), (snapshot) => {
-      let isFoll = false
+      const decision = false
       snapshot.docs.forEach((doc) => {
         if (doc.id === session?.user.uid) {
-          isFoll = true
-        } else {
-          isFoll = false
+          decision = true
         }
+        setCheckIfIsFollowedByLoggedUser(decision)
       })
-
-      setcheckIfIsFollowedByLoggedUser(isFoll)
     })
-  }, [id])
-
-  const deleteFollow = async () => {
-    await deleteDoc(doc(db, 'users', id, 'followers', session.user.uid))
   }
 
-  const addFollow = async () => {
-    await setDoc(doc(db, 'users', id, 'followers', session.user.uid), {
-      username: session.user.username,
-      id: session.user.uid,
-      image: session.user.image,
-    })
+  const followHandler = async () => {
+    if (checkIfIsFollowedByLoggedUser) {
+      deleteDoc(doc(db, 'users', id, 'followers', session.user.uid))
+    } else {
+      setDoc(doc(db, 'users', id, 'followers', session.user.uid), {
+        username: session.user.username,
+        id: session.user.uid,
+        image: session.user.image,
+      })
+    }
   }
   return (
     <div>
@@ -138,11 +138,7 @@ function UserProfile() {
                   {session && session.user.uid !== router.query.profile ? (
                     <button
                       className="ml-5 space-x-4 rounded-lg border bg-blue-300 px-2"
-                      onClick={
-                        checkIfIsFollowedByLoggedUser
-                          ? () => deleteFollow()
-                          : () => addFollow()
-                      }
+                      onClick={() => followHandler()}
                     >
                       {checkIfIsFollowedByLoggedUser ? 'Unfollow' : 'Follow'}
                     </button>
