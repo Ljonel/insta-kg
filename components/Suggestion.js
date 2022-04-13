@@ -43,9 +43,14 @@ function Suggestion({ id, username, image }) {
   return (
     <>
       {isFollowed ? null : (
-        <div className="mt-3 flex items-center justify-between" key={id}>
+        <div
+          className={
+            'mt-3 flex items-center justify-between transition ease-out'
+          }
+          key={id}
+        >
           <div
-            className="relative flex h-full w-full cursor-pointer"
+            className={`relative flex h-full w-full cursor-pointer transition `}
             onClick={() => router.push('profile/' + id)}
           >
             <img className="h-10 w-10 rounded-full " src={image} alt="" />
@@ -57,7 +62,7 @@ function Suggestion({ id, username, image }) {
             {isFollowed ? 'Unfollow' : 'Follow'}
           </button>
         </div>
-      )}
+      )}{' '}
     </>
   )
 }

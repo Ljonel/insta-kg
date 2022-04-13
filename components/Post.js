@@ -28,14 +28,16 @@ import {
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import { GrFormClose } from 'react-icons/gr'
+import { useRouter } from 'next/router'
 
-function Post({ id, username, userImg, img, caption }) {
+function Post({ id, username, userImg, img, caption, userId }) {
   const { data: session } = useSession()
   const [comment, setComment] = useState('')
   const [comments, setComments] = useState([])
   const [likes, setLikes] = useState([])
   const [isLike, setIsLike] = useState(false)
   const chatRefPicker = useRef(null)
+  const router = useRouter()
 
   useEffect(() => {
     return onSnapshot(
@@ -91,13 +93,19 @@ function Post({ id, username, userImg, img, caption }) {
   }
   return (
     <div className=" my-7 w-full rounded-sm border bg-white">
-      <div className="flex items-center justify-between p-3">
+      <div className="flex  items-center justify-between  p-3">
         <img
           src={userImg}
-          className="mr-3 h-12 w-12 rounded-full object-contain p-1"
-          alt=""
+          className="mr-3 h-12  w-12 cursor-pointer rounded-full object-contain p-1"
+          alt={userImg}
+          onClick={() => router.push('/profile/' + userId)}
         />
-        <p className="flex-1 font-bold">{username}</p>
+        <p
+          className="flex-1 cursor-pointer font-bold"
+          onClick={() => router.push('/profile/' + userId)}
+        >
+          {username}
+        </p>
       </div>
 
       {/*IMG  */}
@@ -144,15 +152,19 @@ function Post({ id, username, userImg, img, caption }) {
               style={{ wordWrap: 'break-word' }}
             >
               <img
-                className=" h-5 rounded-full sm:h-8"
+                className=" h-5 cursor-pointer rounded-full sm:h-8"
                 src={c.data().userImage}
                 alt=""
+                onClick={() => router.push('/profile/' + userId)}
               />
               {/* <p
                 className=" flex w-full flex-1 text-sm"
                 style={{ wordWrap: 'break-word', whiteSpace: 'normal' }}
               > */}
-              <span className="mr-2 w-32 text-xs font-bold sm:text-base">
+              <span
+                className="mr-2 w-32 cursor-pointer text-xs font-bold sm:text-base"
+                onClick={() => router.push('/profile/' + userId)}
+              >
                 {c.data().username}
               </span>
               {

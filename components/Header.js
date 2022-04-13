@@ -32,11 +32,11 @@ const Header = ({ setSearchInput }) => {
 
   return (
     <div
-      className={`sticky top-0 z-50 ${
+      className={`sticky top-0 z-50 flex items-center justify-center  ${
         router.pathname === '/users' ? ' min-h-[60px]  justify-center' : ''
       } border-b bg-white shadow-md `}
     >
-      <div className=" flex h-[60px] max-w-6xl justify-between px-4 lg:mx-auto  lg:px-1">
+      <div className=" flex h-[60px] w-full max-w-6xl justify-between  px-4 xl:px-0">
         {/* Logo */}
         <div
           onClick={() => router.push('/')}

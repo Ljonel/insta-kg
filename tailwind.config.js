@@ -4,7 +4,11 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        xd: '926px',
+      },
+    },
   },
   plugins: [require('@tailwindcss/forms'), require('tailwind-scrollbar')],
 }

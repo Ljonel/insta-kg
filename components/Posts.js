@@ -27,6 +27,7 @@ function Posts({ searchInput }) {
         <Post
           key={p.id}
           id={p.id}
+          userId={p.data().userId}
           username={p.data().username}
           userImg={p.data().profileImg}
           img={p.data().image}

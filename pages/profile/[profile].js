@@ -21,6 +21,7 @@ import {
 import { db } from '../../firebase'
 import { GrClose } from 'react-icons/gr'
 import Following from './Following'
+import ProfilePosts from './ProfilePosts'
 function UserProfile() {
   const { data: session } = useSession()
   const router = useRouter()
@@ -59,7 +60,7 @@ function UserProfile() {
       })
       setUserPosts(arr)
     })
-  }, [db, id, following])
+  }, [following])
 
   // get user followers
   useEffect(async () => {
@@ -118,14 +119,15 @@ function UserProfile() {
       })
     }
   }
+
   return (
     <div>
       <Header />
       <Modal />
-      <div className=" z-0 overflow-x-hidden">
-        <div className=" flex h-screen w-screen flex-col items-center ">
-          <div className="h-full w-full  sm:w-[75%]">
-            <div className="flex h-[300px] flex-col items-center border-b-2  sm:h-[200px] sm:flex-row">
+      <div className=" z-0 h-full overflow-x-hidden">
+        <div className=" flex  flex-col items-center ">
+          <div className="h-full w-full max-w-6xl ">
+            <div className=" my-5 flex h-[300px] flex-col items-center sm:h-[200px] sm:flex-row">
               <div className="min-h-24 sm:min-h-96 flex w-full items-center  justify-center  py-2 sm:h-full  ">
                 <img
                   src={user.image}
@@ -145,7 +147,7 @@ function UserProfile() {
                   ) : null}
                 </p>
 
-                <div className="flex h-[60%] flex-row justify-center space-x-10  px-5 md:justify-start">
+                <div className="flex h-[30%] flex-row justify-center space-x-10 px-5  sm:h-[60%] md:justify-start">
                   <p className="max-h-8  bg-white">
                     Posts:
                     <span className="ml-1 font-bold">{userPosts.length}</span>
@@ -168,18 +170,17 @@ function UserProfile() {
               </div>
             </div>
 
-            <div className="flex h-full w-full flex-wrap justify-center  lg:pl-16 xl:justify-start">
-              {userPosts.map((post) => (
-                <div
-                  key={post.id}
-                  className="my-2 mx-2 h-[300px] w-[300px] min-w-[300px] border bg-red-200 "
-                >
-                  <img
-                    src={post.image}
-                    className="h-full w-full overflow-hidden object-cover"
+            <div className="flex w-full flex-wrap justify-center border-t-2 ">
+              <div className=" flex w-[925px] flex-wrap justify-center  xd:justify-start">
+                {userPosts.map((post) => (
+                  <ProfilePosts
+                    key={post.id}
+                    id={post.id}
+                    username={post.username}
+                    image={post.image}
                   />
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
 
