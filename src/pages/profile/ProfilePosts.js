@@ -16,7 +16,7 @@ import {
   setDoc,
   where,
 } from 'firebase/firestore'
-import { db } from '../../firebase'
+import { db } from '../../../firebase'
 import { BsFillSuitHeartFill } from 'react-icons/bs'
 import { BiCommentDetail } from 'react-icons/bi'
 

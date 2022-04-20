@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import modalState from '../atoms/modalAtom'
 import { CameraIcon } from '@heroicons/react/outline'
-import { db, storage } from '../firebase'
+import { db, storage } from '../../firebase'
 import {
   addDoc,
   collection,
@@ -12,25 +12,25 @@ import {
 } from 'firebase/firestore'
 import { useSession } from 'next-auth/react'
 import { ref, getDownloadURL, uploadString } from '@firebase/storage'
-function Modal() {
+const Modal = () => {
   const { data: session } = useSession()
   const [open, setOpen] = useRecoilState(modalState)
   const closeRef = useRef(null)
   const filePickerRef = useRef(null)
   const enterCaptionRef = useRef(null)
-  const [selectedFile, setSelectedFile] = useState(null)
-  const [loading, setLoading] = useState(false)
-
+  const [modalFileState, setModalFileState] = useState({
+    loading: false,
+    selectedFile: null,
+  })
   function handleClickOutside(event) {
     if (closeRef.current && !closeRef.current.contains(event.target)) {
       setOpen(false)
-      console.log(open)
     }
   }
   useEffect(() => {
     document.addEventListener('click', handleClickOutside, true)
     return () => {
-      document.removeEventListener('click', handleClickOutside, true)
+      document.removeEventListener('click', handleClickOutside(), true)
     }
   }, [])
 
@@ -41,13 +41,16 @@ function Modal() {
     }
 
     reader.onload = (readerEvent) => {
-      setSelectedFile(readerEvent.target.result)
+      setModalFileState((prev) => ({
+        ...prev,
+        selectedFile: readerEvent.target.result,
+      }))
     }
   }
 
   const uploadPost = async () => {
-    if (loading) return
-    setLoading(true)
+    if (modalFileState.loading) return
+    setModalFileState((prev) => ({ ...prev, loading: true }))
 
     //Create post & add to firestore posts
     const documentRef = await addDoc(collection(db, 'posts'), {
@@ -57,13 +60,11 @@ function Modal() {
       userId: session.user.uid,
       timestamp: serverTimestamp(),
     })
-    //get post id for new post
-    console.log('ADD NEW DOC', documentRef.id)
 
     //upload image to firebase storage with ID
     const imageRef = ref(storage, `posts/${documentRef.id}/image`)
 
-    await uploadString(imageRef, selectedFile, 'data_url').then(
+    await uploadString(imageRef, modalFileState.selectedFile, 'data_url').then(
       async (snapshot) => {
         const downloadURL = await getDownloadURL(imageRef)
 
@@ -75,8 +76,11 @@ function Modal() {
     )
 
     setOpen(false)
-    setLoading(false)
-    setSelectedFile(null)
+    setModalFileState((prev) => ({
+      ...prev,
+      loading: false,
+      selectedFile: null,
+    }))
   }
 
   return (
@@ -92,11 +96,14 @@ function Modal() {
             className="relative flex h-[400px] w-[400px] flex-col items-center justify-evenly rounded-lg bg-white shadow-sm "
           >
             <div className="flex h-[60%] min-w-full justify-center ">
-              {selectedFile ? (
+              {modalFileState.selectedFile ? (
                 <img
-                  src={selectedFile}
+                  src={modalFileState.selectedFile}
                   onClick={() => {
-                    setSelectedFile(null)
+                    setModalFileState((prev) => ({
+                      ...prev,
+                      selectedFile: null,
+                    }))
                     setOpen(false)
                   }}
                   className="max-h-full  max-w-full object-cover"
@@ -127,10 +134,10 @@ function Modal() {
               <button
                 onClick={uploadPost}
                 type="button"
-                disabled={!selectedFile}
+                disabled={!modalFileState.selectedFile}
                 className="h-[50px] w-[90%] rounded-lg bg-red-200 transition-all ease-out hover:bg-red-400"
               >
-                {loading ? 'Uploading' : 'Upload post'}
+                {modalFileState.loading ? 'Uploading' : 'Upload post'}
               </button>
             </div>
           </div>

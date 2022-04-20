@@ -18,7 +18,7 @@ import {
   setDoc,
   where,
 } from 'firebase/firestore'
-import { db } from '../../firebase'
+import { db } from '../../../firebase'
 import { GrClose } from 'react-icons/gr'
 import Following from './Following'
 import ProfilePosts from './ProfilePosts'

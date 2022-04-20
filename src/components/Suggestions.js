@@ -2,10 +2,10 @@ import React, { useEffect, useCallback, useState } from 'react'
 import faker from '@faker-js/faker'
 import { useSession } from 'next-auth/react'
 import { collection, doc, onSnapshot, setDoc } from 'firebase/firestore'
-import { db } from '../firebase'
+import { db } from '../../firebase'
 import Suggestion from './Suggestion'
 
-function Suggestions({ registeredUsers }) {
+const Suggestions = ({ registeredUsers }) => {
   const { data: session } = useSession()
   return (
     <>

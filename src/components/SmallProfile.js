@@ -1,6 +1,6 @@
 import React from 'react'
 import { signOut, useSession } from 'next-auth/react'
-function SmallProfile() {
+const SmallProfile = () => {
   const { data: session } = useSession()
 
   return (

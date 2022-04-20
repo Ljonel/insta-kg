@@ -6,7 +6,7 @@ import {
 } from 'next-auth/react'
 import Header from '../../components/Header'
 import Head from 'next/head'
-import { db } from '../../firebase'
+import { db } from '../../../firebase'
 import {
   addDoc,
   collection,
@@ -29,10 +29,8 @@ function signIn({ providers, session }) {
     const docRef = doc(db, 'users', session.user.uid)
     onSnapshot(docRef, (d) => {
       if (d.data()) {
-        // console.log('istnieje nie mozna dodac')
         return false
       } else {
-        // console.log(d.id)
         setDoc(doc(db, 'users', d.id), {
           username: session.user.username,
           email: session.user.email,
@@ -42,7 +40,6 @@ function signIn({ providers, session }) {
       }
     })
   }
-  console.log()
   return (
     <>
       <Head>

@@ -1,5 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react'
-
+import React, { useEffect, useState } from 'react'
 import {
   collection,
   deleteDoc,
@@ -7,42 +6,30 @@ import {
   onSnapshot,
   setDoc,
 } from 'firebase/firestore'
-import { db } from '../firebase'
+import { db } from '../../firebase'
 import { useSession } from 'next-auth/react'
-import { Router, useRouter } from 'next/router'
-
-function Suggestion({ id, username, image }) {
-  const [isFollowed, setIsFollowed] = useState(false)
-  const router = useRouter()
+import { useRouter } from 'next/router'
+import useGetFollowers from '../hooks/useGetFollowers'
+const Suggestion = ({ id, username, image }) => {
   const { data: session } = useSession()
-  const [followers, setFollowers] = useState([])
+  const router = useRouter()
 
-  useEffect(() => {
-    return onSnapshot(collection(db, 'users', id, 'followers'), (snapshot) =>
-      setFollowers(snapshot.docs)
-    )
-  }, [])
-  useEffect(() => {
-    setIsFollowed(
-      followers.findIndex((follow) => follow.id === session?.user?.uid) !== -1
-    ),
-      [followers]
-  })
-  const followUser = async () => {
-    if (!isFollowed) {
-      await setDoc(doc(db, 'users', id, 'followers', session.user.uid), {
+  const followers = useGetFollowers(id)
+  const followUser = () => {
+    if (!followers.isFollowed) {
+      setDoc(doc(db, 'users', id, 'followers', session.user.uid), {
         username: session.user.username,
         id: session.user.uid,
         image: session.user.image,
       })
     } else {
-      await deleteDoc(doc(db, 'users', id, 'followers', session.user.uid))
+      deleteDoc(doc(db, 'users', id, 'followers', session.user.uid))
     }
   }
   //EACH USER HAS FOLLOWERS
   return (
     <>
-      {isFollowed ? null : (
+      {followers.isFollowed ? null : (
         <div
           className={
             'mt-3 flex items-center justify-between transition ease-out'
@@ -59,7 +46,7 @@ function Suggestion({ id, username, image }) {
             </div>
           </div>
           <button onClick={followUser} className="text-xs text-blue-400">
-            {isFollowed ? 'Unfollow' : 'Follow'}
+            {followers.isFollowed ? 'Unfollow' : 'Follow'}
           </button>
         </div>
       )}{' '}

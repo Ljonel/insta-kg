@@ -3,7 +3,7 @@ import UserPosts from '../components/UserPosts'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import Modal from '../components/Modal'
-function users() {
+const users = () => {
   const { data: session } = useSession()
   const router = useRouter()
   useEffect(() => {

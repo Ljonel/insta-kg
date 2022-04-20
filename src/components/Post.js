@@ -26,11 +26,11 @@ import {
   serverTimestamp,
   setDoc,
 } from 'firebase/firestore'
-import { db } from '../firebase'
+import { db } from '../../firebase'
 import { GrFormClose } from 'react-icons/gr'
 import { useRouter } from 'next/router'
 
-function Post({ id, username, userImg, img, caption, userId }) {
+const Post = ({ id, username, userImg, img, caption, userId }) => {
   const { data: session } = useSession()
   const [comment, setComment] = useState('')
   const [comments, setComments] = useState([])
@@ -88,7 +88,6 @@ function Post({ id, username, userImg, img, caption, userId }) {
     }
   }
   const handleDeleteComment = (i) => {
-    console.log(id, i)
     deleteDoc(doc(db, 'posts', id, 'comments', i))
   }
   return (

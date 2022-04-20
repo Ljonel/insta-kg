@@ -1,8 +1,7 @@
 import React from 'react'
-import Stories from './Stories'
 import { useRouter } from 'next/router'
 
-function Story({ id, username, img }) {
+const Story = ({ id, username, img }) => {
   const router = useRouter()
   return (
     <div

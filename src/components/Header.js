@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import { useSession, signIn, signOut } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useRecoilState } from 'recoil'
 import { PlusCircleIcon, SearchIcon } from '@heroicons/react/outline'
@@ -24,8 +24,9 @@ const Header = ({ setSearchInput }) => {
   const { data: session } = useSession()
   const router = useRouter()
   const [open, setOpen] = useRecoilState(modalState)
-  const [avatarMenuOpen, setavatarMenuOpen] = useState(false)
+  const [avatarMenuOpen, setAvatarMenuOpen] = useState(false)
 
+  const handleRouteChange = (path) => router.push(path)
   const inputSearchHandler = (e) => {
     setSearchInput(e.target.value)
   }
@@ -39,7 +40,7 @@ const Header = ({ setSearchInput }) => {
       <div className=" flex h-[60px] w-full max-w-6xl justify-between px-4 xl:px-0">
         {/* Logo */}
         <div
-          onClick={() => router.push('/')}
+          onClick={() => handleRouteChange('/')}
           className="relative hidden w-24 cursor-pointer lg:inline-grid"
         >
           <h1
@@ -51,7 +52,7 @@ const Header = ({ setSearchInput }) => {
         </div>
 
         <div
-          onClick={() => router.push('/')}
+          onClick={() => handleRouteChange('/')}
           className="relative w-10 flex-shrink-0 cursor-pointer lg:hidden"
         >
           <Image
@@ -89,7 +90,7 @@ const Header = ({ setSearchInput }) => {
           <div className="flex w-full items-center justify-end space-x-4 md:w-auto md:space-x-4">
             <AiOutlineHome
               title="Home"
-              onClick={() => router.push('/')}
+              onClick={() => handleRouteChange('/')}
               className="navIcon"
             />
             <AiOutlinePlusCircle
@@ -99,7 +100,7 @@ const Header = ({ setSearchInput }) => {
             />
             <CgNotes
               title="My Posts"
-              onClick={() => router.push('/users')}
+              onClick={() => handleRouteChange('/users')}
               className="navIcon"
             />
 
@@ -107,14 +108,16 @@ const Header = ({ setSearchInput }) => {
               <img
                 src={session.user.image}
                 alt="profile-picture"
-                onClick={() => setavatarMenuOpen(!avatarMenuOpen)}
+                onClick={() => setAvatarMenuOpen((prev) => !prev)}
                 className="relative h-10 cursor-pointer rounded-full transition-all ease-out hover:scale-110"
               />
 
               {avatarMenuOpen && (
                 <div className="absolute right-[-20px] mr-[50%] mt-3 flex w-[100px] flex-col space-y-3 border bg-white p-3">
                   <button
-                    onClick={() => router.push('/profile/' + session.user.uid)}
+                    onClick={() =>
+                      handleRouteChange('/profile/' + session.user.uid)
+                    }
                     className=" h-[30px] w-full  rounded-md text-center hover:bg-blue-300 "
                   >
                     {' '}
@@ -123,7 +126,7 @@ const Header = ({ setSearchInput }) => {
 
                   <button
                     className="h-[30px] w-full rounded-md text-center hover:bg-blue-300"
-                    onClick={() => router.push('/users')}
+                    onClick={() => handleRouteChange('/users')}
                   >
                     {' '}
                     My posts

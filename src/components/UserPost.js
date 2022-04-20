@@ -7,13 +7,13 @@ import {
 } from 'firebase/firestore'
 import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
-import { db } from '../firebase'
+import { db } from '../../firebase'
 import { BsFillTrashFill } from 'react-icons/bs'
 import { GrFormClose } from 'react-icons/gr'
 import { AiFillEdit } from 'react-icons/ai'
 import { HeartIcon } from '@heroicons/react/outline'
 
-function UserPost({ id, username, img, caption }) {
+const UserPost = ({ id, username, img, caption }) => {
   const [likes, setLikes] = useState([])
   const { data: session } = useSession()
   const [comments, setComments] = useState([])

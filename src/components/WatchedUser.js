@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 import { db } from '../firebase'
 
-function WatchedUser({ id, username, image }) {
+const WatchedUser = ({ id, username, image }) => {
   const { data: session } = useSession()
   const [watchedUsers, setWatchedUsers] = useState([])
   const [isFollow, setIsFollow] = useState(false)
@@ -22,8 +22,6 @@ function WatchedUser({ id, username, image }) {
 
   const handleDeleteFollow = (i) => {
     deleteDoc(doc(db, 'users', i, 'followers', session?.user.uid))
-    console.log(id)
-    console.log(isFollow)
   }
   return (
     <div>
