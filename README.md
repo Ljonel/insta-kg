@@ -1,6 +1,6 @@
 This app is built to learn NextJS and Firebase. All functionalities are base on Instagram
 
-[InstaKilo](https://ljonel.github.io/infinite-scroll/)
+[InstaKilo](https://insta-kg.vercel.app/)
 
 
 
